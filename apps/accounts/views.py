@@ -6,4 +6,4 @@ def singin(request):
 
 
 def singup(request):
-    pass
+    return render(request, 'singup.html')
