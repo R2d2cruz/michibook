@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if error %}
+{{error}}
+{% endif %}
+<form method="POST">
+    {% csrf_token %}
+    <div>
+        <label for="id_username">Username:</label>
+
+        <input type="text" name="username" maxlength="150" autocapitalize="none" autofocus=""
+            required="" aria-describedby="id_username_helptext" id="id_username">
+    </div>
+
+    <div>
+        <label for="id_password">Password:</label>
+
+        <input type="password" name="password" required="" aria-describedby="id_password1_helptext" id="id_password">
+    </div>
+    <button>
+        Iniciar sesion
+    </button>
+</form>
+{% endblock %}
