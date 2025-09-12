@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.urls import path
-from .views import singin, singup
+from .views import signIn, signUp
 
 urlpatterns = [
-    path('login/', singin, name="login"),
-    path('registrar/', singup, name="register")
+    path('login/', signIn, name="login"),
+    path('registrar/', signUp, name="register")
 ]
