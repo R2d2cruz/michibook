@@ -6,4 +6,4 @@ def userProfile(request, user_name):
 
 
 def users(request):
-    pass
+    return render(request, 'users.html')
