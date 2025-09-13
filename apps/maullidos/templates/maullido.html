@@ -1,0 +1,9 @@
+<div class="maullido-card">
+    <a href="{% url 'userProfile' username=post.postUser.username %}">
+        {{ post.postUser.username }}
+    </a>
+    <p>{{ post.body }}</p>
+    <p>Likes: {{ post.likes }}</p>
+    <p>Dislikes: {{ post.dislikes }}</p>
+    <p><small>{{ post.postDate|date:"d/m/Y H:i" }}</small></p>
+</div>
