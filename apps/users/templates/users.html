@@ -1,1 +1,9 @@
 {% extends 'base.html' %}
+
+{% block content %}
+    {% for user in users %}
+        {% include "userCard.html" %}
+    {% empty %}
+        <p>No hay usuarios todavía 😺</p>
+    {% endfor %}
+{% endblock %}
