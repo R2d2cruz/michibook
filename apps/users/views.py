@@ -7,10 +7,12 @@ from django.contrib.auth.models import User
 def userProfile(request, username):
     try:
         user = get_object_or_404(User, username=username)
+        posts = user.maullidos.all()
         return render(request, 'userProfile.html', {
-            'user': user
+            'user': user,
+            'posts': posts,
         })
-    except:
+    except User.DoesNotExist:
         return render(request, 'userProfile.html', {
             'error': "Usuario " + username + " no encontrado"
         })

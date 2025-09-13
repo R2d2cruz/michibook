@@ -10,5 +10,7 @@
     <p><strong>Email:</strong> {{ user.email }}</p>
     <p><strong>Biografía:</strong> {{ user.profile.biography }}</p>
     <p><strong>Fecha de nacimiento:</strong> <small>{{ user.profile.birthDate|date:"d/m/Y" }}</small></p>
+
+    {% include "maullidos.html" %}
 {% endif %}
 {% endblock %}
