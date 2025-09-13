@@ -11,3 +11,7 @@ class Maullido(models.Model):
 
     def __str__(self):
         return self.postUser.username + " - " + self.body
+    
+    class Meta:
+        ordering = ['-postDate'] 
+
