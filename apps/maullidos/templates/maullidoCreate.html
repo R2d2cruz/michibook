@@ -1,0 +1,13 @@
+<form method="POST">
+    {% csrf_token %}
+    <div>
+        <label for="id_maullido">Que estas pensando?</label>
+
+        <input type="text" name="maullido" maxlength="150" autocapitalize="none" autofocus=""
+            required="" aria-describedby="id_maullido_helptext" id="id_maullido">
+    </div>
+
+    <button>
+        publicar
+    </button>
+</form>
