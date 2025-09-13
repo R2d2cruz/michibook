@@ -1,1 +1,14 @@
 {% extends 'base.html' %}
+
+{% block content %}
+{% if error %}
+    <h1>Error 404: {{ user }} no encontrado</h1>
+{% else %}
+    <p><strong>Usuario:</strong> {{ user.username }}</p>
+    <p><strong>Nombre:</strong> {{ user.first_name }}</p>
+    <p><strong>Apellido:</strong> {{ user.last_name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Biografía:</strong> {{ user.profile.biography }}</p>
+    <p><strong>Fecha de nacimiento:</strong> <small>{{ user.profile.birthDate|date:"d/m/Y" }}</small></p>
+{% endif %}
+{% endblock %}
