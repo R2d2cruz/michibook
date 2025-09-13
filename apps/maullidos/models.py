@@ -10,4 +10,4 @@ class Maullido(models.Model):
     dislikes = models.IntegerField(default = 0)
 
     def __str__(self):
-        return self.postUser + " - " + self.postDate
+        return self.postUser.username + " - " + self.body
