@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.db import IntegrityError
 
+from apps.users.models import UserProfile
+
 # Create your views here.
 def signIn(request):
     if request.method == 'GET':
@@ -31,6 +33,10 @@ def signUp(request):
                 user = User.objects.create_user(username=request.POST["username"], password=request.POST["password1"])
                 user.save()
                 login(request, user)
+
+                profile = UserProfile(user=user)
+                profile.save()
+                
                 return redirect("feed")
             except IntegrityError:
                 error = "Usuario ya existe"
