@@ -17,4 +17,7 @@ def userProfile(request, username):
 
 
 def users(request):
-    return render(request, 'users.html')
+    users = User.objects.all
+    return render(request, 'users.html', {
+        'users': users,
+    })
