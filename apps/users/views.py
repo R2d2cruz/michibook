@@ -9,20 +9,20 @@ from .models import UserProfile
 # Create your views here.
 def userProfile(request, username):
     try:
-        userProfile = get_object_or_404(User, username=username)
+        user = get_object_or_404(User, username=username)
     except User.DoesNotExist:
         return render(request, 'userProfile.html', {
             'error': "Usuario " + username + " no encontrado"
         })
     if request.method == "POST":
-        user = request.user
-        if username == user.username:
-            maullido = Maullido.objects.create(postUser= user ,body= request.POST['maullido'])
+        userServer = request.user
+        if username == userServer.username:
+            maullido = Maullido.objects.create(postUser= userServer ,body= request.POST['maullido'])
             maullido.save()
             return redirect('userProfile', username)
-    posts = userProfile.maullidos.all()
+    posts = user.maullidos.all()
     return render(request, 'userProfile.html', {
-        'userProfile': userProfile,
+        'userProfile': user,
         'posts': posts,
     })
 
