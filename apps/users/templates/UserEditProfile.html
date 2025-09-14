@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{{error}}
+
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <label for="id_first_name">Nombres:</label>
+
+        <input type="text" name="first_name" maxlength="254" autocapitalize="none" id="id_first_name" 
+            value="{{ user.first_name }}"  required>
+    </div>
+
+    <div>
+        <label for="id_last_name">Apellidos:</label>
+
+        <input type="text" name="last_name" maxlength="254" autocapitalize="none" id="id_last_name" 
+            value="{{ user.last_name }}" required>
+    </div>
+
+    <div>
+        <label for="id_email">Correo:</label>
+        <input type="email" name="email" maxlength="254" id="id_email" value="{{ user.email }}" required>
+    </div>
+
+    <div>
+        <label for="id_biography">Cuéntanos más sobre ti:</label>
+        <textarea name="biography" id="id_biography" rows="5" placeholder="">{{ profile.biography }}</textarea>
+    </div>
+
+    <div>
+        <label for="id_birthDate">Cumpleaños:</label>
+        {% if profile.birthDate %}
+            <input type="date" name="birthDate" id="id_birthDate" value="{{ profile.birthDate|date:'Y-m-d' }}" required>
+        {% else %}
+            <input type="date" name="birthDate" id="id_birthDate" required>
+        {% endif %}
+    </div>
+
+    <button>Guardar cambios</button>
+</form>
+{% endblock %}
