@@ -2,14 +2,19 @@
 
 {% block content %}
 {% if error %}
-    <h1>Error 404: {{ user }} no encontrado</h1>
+    <h1>Error 404: {{ userProfile }} no encontrado</h1>
 {% else %}
-    <p><strong>Usuario:</strong> {{ user.username }}</p>
-    <p><strong>Nombre:</strong> {{ user.first_name }}</p>
-    <p><strong>Apellido:</strong> {{ user.last_name }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>Biografía:</strong> {{ user.profile.biography }}</p>
-    <p><strong>Fecha de nacimiento:</strong> <small>{{ user.profile.birthDate|date:"d/m/Y" }}</small></p>
+    <p><strong>Usuario:</strong> {{ userProfile.username }}</p>
+    <p><strong>Nombre:</strong> {{ userProfile.first_name }}</p>
+    <p><strong>Apellido:</strong> {{ userProfile.last_name }}</p>
+    <p><strong>Email:</strong> {{ userProfile.email }}</p>
+    <p><strong>Biografía:</strong> {{ userProfile.profile.biography }}</p>
+    <p><strong>Fecha de nacimiento:</strong> <small>{{ userProfile.profile.birthDate|date:"d/m/Y" }}</small></p>
+
+    {% if user.is_authenticated and user == userProfile%}
+
+        <button href="editProfile">editar</button>
+    {% endif%}
 
     {% include "maullidos.html" %}
 {% endif %}
