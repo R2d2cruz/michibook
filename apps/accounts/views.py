@@ -37,7 +37,7 @@ def signUp(request):
                 profile = UserProfile(user=user)
                 profile.save()
                 
-                return redirect("feed")
+                return redirect("userEditProfile", user.username)
             except IntegrityError:
                 error = "Usuario ya existe"
         else:
