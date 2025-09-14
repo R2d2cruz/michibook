@@ -2,6 +2,8 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from .models import Maullido
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
 # Create your views here.
 def feed(request):
@@ -13,6 +15,8 @@ def feed(request):
     })
 
 
+@login_required
+@require_POST
 def reactMaullido(request, maullido_id):
     try:
         maullido = get_object_or_404(Maullido, id=maullido_id)
