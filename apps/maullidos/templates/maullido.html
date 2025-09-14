@@ -1,9 +1,49 @@
-<div class="maullido-card">
+<div class="maullido-card" id="maullido-{{ post.id }}">
     <a href="{% url 'userProfile' username=post.postUser.username %}">
         {{ post.postUser.username }}
     </a>
     <p>{{ post.body }}</p>
-    <p>Likes: {{ post.likes }}</p>
-    <p>Dislikes: {{ post.dislikes }}</p>
+
+    <div class="maullido-actions">
+        <button onclick="reactMaullido({{ post.id }}, 'like')">👍</button>
+        <span id="likes-{{ post.id }}">{{ post.likes }}</span>
+
+        <button onclick="reactMaullido({{ post.id }}, 'dislike')">👎</button>
+        <span id="dislikes-{{ post.id }}">{{ post.dislikes }}</span>
+    </div>
+
     <p><small>{{ post.postDate|date:"d/m/Y" }}</small></p>
 </div>
+<script>
+    function reactMaullido(maullidoId, action) {
+        const url = `{% url 'reactMaullido' 0 %}`.replace('0', maullidoId);
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken"),
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: `action=${action}`,
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById(`likes-${maullidoId}`).textContent = data.likes;
+                document.getElementById(`dislikes-${maullidoId}`).textContent = data.dislikes;
+            });
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                cookie = cookie.trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
