@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 
 from apps.users.models import UserProfile
@@ -46,3 +47,9 @@ def signUp(request):
             'form': UserCreationForm,
             'error': error,
         })
+
+@login_required 
+def signOut(request):
+    user = request.user
+    logout(request)
+    return redirect("feed")
