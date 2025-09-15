@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
-from .models import Maullido
+from .models import Maullido, MaullidoReaction
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
@@ -18,17 +18,29 @@ def feed(request):
 @login_required
 @require_POST
 def reactMaullido(request, maullido_id):
-    try:
-        maullido = get_object_or_404(Maullido, id=maullido_id)
-    except Maullido.DoesNotExist:
-        return JsonResponse({"error": "Maullido no encontrado"}, status=404)
+    maullido = get_object_or_404(Maullido, id=maullido_id)
     action = request.POST.get("action")
-    if action == "like":
-        maullido.likes += 1
-    elif action == "dislike":
-        maullido.dislikes += 1
-    maullido.save()
+
+    if action not in dict(MaullidoReaction.REACTION_CHOICES):
+        return JsonResponse({"error": "Reacción no válida"}, status=400)
+
+    reaction, created = MaullidoReaction.objects.get_or_create(
+        user=request.user,
+        maullido=maullido,
+        defaults={'reaction': action}
+    )
+
+    if not created:
+        if reaction.reaction == action:
+            reaction.delete()
+        else:
+            reaction.reaction = action
+            reaction.save()
+
     return JsonResponse({
-        "likes": maullido.likes,
-        "dislikes": maullido.dislikes
+        "happys": maullido.happys_count,
+        "sads": maullido.sads_count,
+        "loves": maullido.loves_count,
+        "shockeds": maullido.shockeds_count,
+        "angrys": maullido.angrys_count,
     })
