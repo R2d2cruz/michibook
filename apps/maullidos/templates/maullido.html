@@ -5,11 +5,20 @@
     <p>{{ post.body }}</p>
 
     <div class="maullido-actions">
-        <button onclick="reactMaullido({{ post.id }}, 'like')">👍</button>
-        <span id="likes-{{ post.id }}">{{ post.likes }}</span>
+        <button onclick="reactMaullido({{ post.id }}, 'happy')">😺</button>
+        <span id="happys-{{ post.id }}">{{ post.happys_count }}</span>
 
-        <button onclick="reactMaullido({{ post.id }}, 'dislike')">👎</button>
-        <span id="dislikes-{{ post.id }}">{{ post.dislikes }}</span>
+        <button onclick="reactMaullido({{ post.id }}, 'sad')">😿</button>
+        <span id="sads-{{ post.id }}">{{ post.sads_count }}</span>
+
+        <button onclick="reactMaullido({{ post.id }}, 'love')">😻</button>
+        <span id="loves-{{ post.id }}">{{ post.loves_count }}</span>
+
+        <button onclick="reactMaullido({{ post.id }}, 'shocked')">🙀</button>
+        <span id="shockeds-{{ post.id }}">{{ post.shockeds_count }}</span>
+        
+        <button onclick="reactMaullido({{ post.id }}, 'angry')">😾</button>
+        <span id="angrys-{{ post.id }}">{{ post.angrys_count }}</span>
     </div>
 
     <p><small>{{ post.postDate|date:"d/m/Y" }}</small></p>
@@ -27,8 +36,11 @@
         })
             .then(response => response.json())
             .then(data => {
-                document.getElementById(`likes-${maullidoId}`).textContent = data.likes;
-                document.getElementById(`dislikes-${maullidoId}`).textContent = data.dislikes;
+                document.getElementById(`happys-${maullidoId}`).textContent = data.happys;
+                document.getElementById(`sads-${maullidoId}`).textContent = data.sads;
+                document.getElementById(`loves-${maullidoId}`).textContent = data.loves;
+                document.getElementById(`shockeds-${maullidoId}`).textContent = data.shockeds;
+                document.getElementById(`angrys-${maullidoId}`).textContent = data.angrys;
             });
     }
 
