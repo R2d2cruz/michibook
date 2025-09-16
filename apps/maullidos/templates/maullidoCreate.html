@@ -1,13 +1,27 @@
-<form method="POST">
+<form id="create-maullido-form" method="POST">
     {% csrf_token %}
     <div>
         <label for="id_maullido">Que estas pensando?</label>
-
-        <input type="text" name="maullido" maxlength="150" autocapitalize="none" autofocus=""
-            required="" aria-describedby="id_maullido_helptext" id="id_maullido">
+        <input type="text" name="maullido" maxlength="150" required id="id_maullido">
     </div>
-
-    <button>
-        publicar
-    </button>
+    <button type="submit">publicar</button>
 </form>
+
+<script>
+    document.getElementById("create-maullido-form").addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+
+        const response = await fetch("{% url 'userMaullidoCreate' %}", {
+            method: "POST",
+            headers: { "X-CSRFToken": formData.get("csrfmiddlewaretoken") },
+            body: formData,
+        });
+
+        if (response.ok) {
+            this.reset();
+        } else {
+            alert("Error al publicar");
+        }
+    });
+</script>
