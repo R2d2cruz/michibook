@@ -1,8 +1,12 @@
-{% for post in posts %}
-    {% include "maullido.html" %}
-{% empty %}
-    <p>No hay maullidos todavía 😺</p>
-{% endfor %}
+<div id="maullidos-container"
+     data-global-feed="{{ global_feed|yesno:'true,false' }}"
+     {% if userProfile %}data-profile-username="{{ userProfile.username }}"{% endif %}>
+    {% for post in posts %}
+        {% include "maullido.html" %}
+    {% empty %}
+        <p>No hay maullidos todavía 😺</p>
+    {% endfor %}
+</div>
 <script>
 (function () {
     const protocol = window.location.protocol === "https:" ? "wss" : "ws";
