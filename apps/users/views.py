@@ -24,6 +24,7 @@ def userProfile(request, username):
     return render(request, 'userProfile.html', {
         'userProfile': user,
         'posts': posts,
+        "global_feed": False,
     })
 
 
