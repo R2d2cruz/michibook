@@ -74,3 +74,10 @@ class MaullidoConsumer(AsyncWebsocketConsumer):
             "maullido_id": event["maullido_id"],
             "reactions": event["reactions"],
         }))
+
+    async def sendNewMaullido(self, event):
+        await self.send(text_data=json.dumps({
+            "type": "new_maullido",
+            "html": event["html"],
+            "username": event["username"],
+        }))
