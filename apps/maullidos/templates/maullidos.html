@@ -10,6 +10,9 @@
 <script>
 (function () {
     const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+    const container = document.getElementById("maullidos-container");
+    const globalFeed = container.dataset.globalFeed === "true";
+    const profileUsername = container.dataset.profileUsername || null;
     const maullidoSocket = new WebSocket(
         protocol + "://" + window.location.host + "/ws/maullidos/"
     );
@@ -20,6 +23,17 @@
 
     maullidoSocket.onmessage = function (e) {
         const data = JSON.parse(e.data);
+        if (data.type === "new_maullido") {
+            if (globalFeed || profileUsername === data.username) {
+                const temp = document.createElement("div");
+                temp.innerHTML = data.html;
+                const newPost = temp.firstElementChild;
+                container.insertBefore(newPost, container.firstChild);
+            }
+            return;
+        }
+
+
         const id = data.maullido_id;
         const r = data.reactions || {};
 
