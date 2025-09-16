@@ -13,3 +13,13 @@ def feed(request):
     return render(request, 'feed.html', {
         'posts': posts
     })
+
+@login_required
+@require_POST
+def createMaullido(request):
+    if request.method == "POST":
+        text = request.POST.get("maullido", "").strip()
+        
+        maullido = Maullido.objects.create(postUser=request.user, body=text)
+        maullido.save()
+        
