@@ -74,8 +74,3 @@ class MaullidoConsumer(AsyncWebsocketConsumer):
             "maullido_id": event["maullido_id"],
             "reactions": event["reactions"],
         }))
-
-    async def sendReactionUpdate(self, event):
-        await self.sendReactionUpdate(event)
-        
-    
