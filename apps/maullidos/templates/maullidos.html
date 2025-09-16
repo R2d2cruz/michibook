@@ -3,3 +3,68 @@
 {% empty %}
     <p>No hay maullidos todavía 😺</p>
 {% endfor %}
+<script>
+(function () {
+    const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+    const maullidoSocket = new WebSocket(
+        protocol + "://" + window.location.host + "/ws/maullidos/"
+    );
+
+    maullidoSocket.onopen = function () {
+        console.log("✅ WebSocket conectado a /ws/maullidos/");
+    };
+
+    maullidoSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        const id = data.maullido_id;
+        const r = data.reactions || {};
+
+        const safeSet = (selector, value) => {
+            const el = document.getElementById(selector);
+            if (el) el.textContent = value;
+        };
+
+        safeSet(`happys-${id}`, r.happys ?? safeGet(`happys-${id}`));
+        safeSet(`sads-${id}`, r.sads ?? safeGet(`sads-${id}`));
+        safeSet(`loves-${id}`, r.loves ?? safeGet(`loves-${id}`));
+        safeSet(`shockeds-${id}`, r.shockeds ?? safeGet(`shockeds-${id}`));
+        safeSet(`angrys-${id}`, r.angrys ?? safeGet(`angrys-${id}`));
+    };
+
+    maullidoSocket.onclose = function (e) {
+        console.error("❌ WebSocket cerrado inesperadamente", e);
+    };
+
+    window.reactMaullido = function (maullidoId, action) {
+        maullidoSocket.send(
+            JSON.stringify({
+                maullido_id: maullidoId,
+                action: action,
+                csrfmiddlewaretoken: getCookie("csrftoken"),
+            })
+        );
+    };
+
+    function safeGet(id) {
+        const el = document.getElementById(id);
+        return el ? el.textContent : "";
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let cookie of cookies) {
+                cookie = cookie.trim();
+                if (cookie.substring(0, name.length + 1) === name + "=") {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    window.__maullidoSocket = maullidoSocket;
+})();
+</script>
