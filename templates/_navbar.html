@@ -1,22 +1,39 @@
-<nav>
-    <ul>
-        <li>
-            <a href="{% url 'feed' %}">Home</a>
-        </li>
-        <li>
-            <a href="{% url 'users' %}">Usuarios</a>
-        </li>
-        {% if user.is_authenticated%}
-            <li>
-                <a href="{% url 'logout' %}">Logout</a>
-            </li>
-        {% else %}
-            <li>
-                <a href="{% url 'login' %}">Login</a>
-            </li>
-            <li>
-                <a href="{% url 'register' %}">Signup</a>
-            </li>
-        {% endif %}
-    </ul>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand me-auto" href="{% url 'feed' %}">
+            <span>MICHIBOOK</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown ms-lg-3">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown"
+                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="profile-circle-out">
+                            <div class="profile-circle-in"></div>
+                        </div>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                        <li><a class="dropdown-item" href="{% url 'userProfile' user.username %}">Perfil</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a></li>
+                    </ul>
+                </li>
+
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registrarse</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
 </nav>
