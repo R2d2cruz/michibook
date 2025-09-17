@@ -1,13 +1,33 @@
-<form id="create-maullido-form" method="POST">
+<form id="create-maullido-form" method="POST" class="post-container">
     {% csrf_token %}
-    <div>
-        <label for="id_maullido">Que estas pensando?</label>
-        <input type="text" name="maullido" maxlength="150" required id="id_maullido">
+    <div class="d-flex flex-column">
+        <label for="id_maullido" class="form-label">¿Qué estás pensando?</label>
+
+        <div class="input-group mb-3">
+            <textarea name="maullido" maxlength="150" required id="id_maullido" class="form-control"
+                placeholder="Escribe tu maullido..."></textarea>
+        </div>
+
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">Maullar</button>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <small id="char-counter" class="text-muted">0/150</small>
+        </div>
     </div>
-    <button type="submit">publicar</button>
 </form>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const textarea = document.getElementById('id_maullido');
+        const counter = document.getElementById('char-counter');
+
+        textarea.addEventListener('input', function () {
+            counter.textContent = `${this.value.length}/150`;
+        });
+    });
+
     document.getElementById("create-maullido-form").addEventListener("submit", async function (e) {
         e.preventDefault();
         const formData = new FormData(this);
