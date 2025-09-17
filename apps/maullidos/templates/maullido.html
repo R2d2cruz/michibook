@@ -1,25 +1,38 @@
-<div class="maullido-card" id="maullido-{{ post.id }}">
-    <a href="{% url 'userProfile' username=post.postUser.username %}">
-        {{ post.postUser.username }}
-    </a>
-    <p>{{ post.body }}</p>
+<div class="maullido-card card mb-4" id="maullido-{{ post.id }}">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+            <h5 class="card-title mb-0">
+                <a href="{% url 'userProfile' username=post.postUser.username %}" class="text-decoration-none">
+                    <span class="maullido-username">@{{ post.postUser.username }}</span>
+                </a>
+            </h5>
+            <small class="maullido-date">{{ post.postDate|date:"d/m/Y" }}</small>
+        </div>
 
-    <div class="maullido-actions">
-        <button onclick="reactMaullido({{ post.id }}, 'happy')">😺</button>
-        <span id="happys-{{ post.id }}">{{ post.happys_count }}</span>
+        <p class="card-text">
+            {{ post.body }}
+        </p>
 
-        <button onclick="reactMaullido({{ post.id }}, 'sad')">😿</button>
-        <span id="sads-{{ post.id }}">{{ post.sads_count }}</span>
+        <div class="maullido-actions d-flex justify-content-start align-items-center mt-3">
+            <button onclick="reactMaullido({{ post.id }}, 'happy')" class="btn btn-reaction me-2 p-1">
+                😺 <span id="happys-{{ post.id }}">{{ post.happys_count }}</span>
+            </button>
 
-        <button onclick="reactMaullido({{ post.id }}, 'love')">😻</button>
-        <span id="loves-{{ post.id }}">{{ post.loves_count }}</span>
+            <button onclick="reactMaullido({{ post.id }}, 'love')" class="btn btn-reaction me-2 p-1">
+                😻 <span id="loves-{{ post.id }}">{{ post.loves_count }}</span>
+            </button>
 
-        <button onclick="reactMaullido({{ post.id }}, 'shocked')">🙀</button>
-        <span id="shockeds-{{ post.id }}">{{ post.shockeds_count }}</span>
-        
-        <button onclick="reactMaullido({{ post.id }}, 'angry')">😾</button>
-        <span id="angrys-{{ post.id }}">{{ post.angrys_count }}</span>
+            <button onclick="reactMaullido({{ post.id }}, 'shocked')" class="btn btn-reaction me-2 p-1">
+                🙀 <span id="shockeds-{{ post.id }}">{{ post.shockeds_count }}</span>
+            </button>
+
+            <button onclick="reactMaullido({{ post.id }}, 'angry')" class="btn btn-reaction me-2 p-1">
+                😾 <span id="angrys-{{ post.id }}">{{ post.angrys_count }}</span>
+            </button>
+
+            <button onclick="reactMaullido({{ post.id }}, 'sad')" class="btn btn-reaction me-2 p-1">
+                😿 <span id="sads-{{ post.id }}">{{ post.sads_count }}</span>
+            </button>
+        </div>
     </div>
-
-    <p><small>{{ post.postDate|date:"d/m/Y" }}</small></p>
 </div>
