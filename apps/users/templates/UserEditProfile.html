@@ -1,44 +1,69 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            {% if error %}
+            <div class="alert alert-danger" role="alert">{{ error }}</div>
+            {% endif %}
 
-{{error}}
+            <div class="card p-4 text-center">
+                <div class="d-flex justify-content-center mb-3">
+                    <div class="profile-pic-container-lg"></div>
+                </div>
+                <h2 class="mb-4 user-profile-username">@{{ user.username }}</h2>
 
-<form method="post">
-    {% csrf_token %}
-    <div>
-        <label for="id_first_name">Nombres:</label>
+                <form method="post">
+                    {% csrf_token %}
 
-        <input type="text" name="first_name" maxlength="254" autocapitalize="none" id="id_first_name" 
-            value="{{ user.first_name }}"  required>
+                    <div class="mb-3">
+                        <label for="id_first_name" class="form-label">Nombre</label>
+                        <input type="text" name="first_name" maxlength="254" id="id_first_name" class="form-control"
+                            value="{{ user.first_name }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_last_name" class="form-label">Apellido</label>
+                        <input type="text" name="last_name" maxlength="254" id="id_last_name" class="form-control"
+                            value="{{ user.last_name }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_birthDate" class="form-label">Fecha de nacimiento</label>
+                        {% if profile.birthDate %}
+                        <input type="text" name="birthDate" id="id_birthDate" class="form-control"
+                            placeholder="DD/MM/AAAA" value="{{ profile.birthDate|date:'d/m/Y' }}" required>
+                        {% else %}
+                        <input type="text" name="birthDate" id="id_birthDate" class="form-control"
+                            placeholder="DD/MM/AAAA" required>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_biography" class="form-label">Cuéntanos sobre ti</label>
+                        <textarea name="biography" id="id_biography" rows="5" class="form-control"
+                            placeholder="Escribe tu biografía...">{{ profile.biography }}</textarea>
+                    </div>
+
+                    <input type="hidden" name="email" value="{{ user.email }}">
+
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div>
-        <label for="id_last_name">Apellidos:</label>
-
-        <input type="text" name="last_name" maxlength="254" autocapitalize="none" id="id_last_name" 
-            value="{{ user.last_name }}" required>
-    </div>
-
-    <div>
-        <label for="id_email">Correo:</label>
-        <input type="email" name="email" maxlength="254" id="id_email" value="{{ user.email }}" required>
-    </div>
-
-    <div>
-        <label for="id_biography">Cuéntanos más sobre ti:</label>
-        <textarea name="biography" id="id_biography" rows="5" placeholder="">{{ profile.biography }}</textarea>
-    </div>
-
-    <div>
-        <label for="id_birthDate">Cumpleaños:</label>
-        {% if profile.birthDate %}
-            <input type="date" name="birthDate" id="id_birthDate" value="{{ profile.birthDate|date:'Y-m-d' }}" required>
-        {% else %}
-            <input type="date" name="birthDate" id="id_birthDate" required>
-        {% endif %}
-    </div>
-
-    <button>Guardar cambios</button>
-</form>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr("#id_birthDate", {
+            dateFormat: "d/m/Y",
+            locale: "es",
+            maxDate: "today"
+        });
+    });
+</script>
 {% endblock %}
