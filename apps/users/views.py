@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from apps.maullidos.models import Maullido
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile
-
+from datetime import datetime
 
 # Create your views here.
 def userProfile(request, username):
@@ -52,8 +52,13 @@ def userEditProfile(request, username):
             user.last_name = request.POST['last_name']
             user.email = request.POST['email']
             user.save()
+            birthDateStr = request.POST['birthDate']
+            try:
+                birthDate = datetime.strptime(birthDateStr, "%d/%m/%Y").date()
+            except ValueError:
+                birthDate = None
             userProfile.biography = request.POST['biography']
-            userProfile.birthDate = request.POST['birthDate']
+            userProfile.birthDate = birthDate
             userProfile.save()
             return redirect('userProfile', username)
     return render(request, 'userEditProfile.html', {
