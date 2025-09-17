@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from datetime import datetime
 
 from apps.users.models import UserProfile
 
@@ -29,13 +30,21 @@ def signUp(request):
         })
     elif request.method == 'POST':
         error = ""
-        if request.POST["password1"] == request.POST["password2"]:
+        print(request.POST)
+        if request.POST["password"] == request.POST["password2"]:
             try:
-                user = User.objects.create_user(username=request.POST["username"], password=request.POST["password1"])
+                user = User.objects.create_user(username=request.POST["username"], password=request.POST["password"], 
+                                                first_name=request.POST["first_name"], last_name=request.POST["last_name"], 
+                                                email=request.POST["email"])
                 user.save()
                 login(request, user)
+                birthDateStr = request.POST['birthDate']
+                try:
+                    birthDate = datetime.strptime(birthDateStr, "%d/%m/%Y").date()
+                except ValueError:
+                    birthDate = None
 
-                profile = UserProfile(user=user)
+                profile = UserProfile(user=user, birthDate=birthDate)
                 profile.save()
                 
                 return redirect("userEditProfile", user.username)
