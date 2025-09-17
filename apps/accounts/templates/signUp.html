@@ -1,14 +1,69 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if error %}
-{{error}}
-{% endif %}
-<form method="POST">
-    {% csrf_token %}
-    {{form}}
-    <button>
-        Registrarse
-    </button>
-</form>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <div class="card p-4">
+                <h3 class="text-center mb-4" style="color: #1971c2;">Crear nuevo usuario</h3>
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label">Nombre de usuario</label>
+                        <input type="text" name="username" class="form-control" id="id_username" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_first_name" class="form-label">Nombre</label>
+                        <input type="text" name="first_name" class="form-control" id="id_first_name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_last_name" class="form-label">Apellido</label>
+                        <input type="text" name="last_name" class="form-control" id="id_last_name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_password" class="form-label">Contraseña</label>
+                        <input type="password" name="password" class="form-control" id="id_password" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_password2" class="form-label">Confirma la contraseña</label>
+                        <input type="password" name="password2" class="form-control" id="id_password2" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_birth_date" class="form-label">Fecha de nacimiento</label>
+                        <input type="text" name="birth_date" class="form-control" id="id_birth_date"
+                            placeholder="DD/MM/AAAA" required>
+                    </div>
+
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg" style="font-size: 1.2rem;">
+                            Crear cuenta
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr("#id_birth_date", {
+            dateFormat: "d/m/Y",
+            locale: "es",
+            maxDate: "today" // No permite fechas futuras
+        });
+    });
+</script>
 {% endblock %}
