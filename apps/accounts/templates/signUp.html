@@ -31,6 +31,11 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="id_email" class="form-label">Correo electronico</label>
+                        <input type="text" name="email" class="form-control" id="id_email" required>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="id_password" class="form-label">Contraseña</label>
                         <input type="password" name="password" class="form-control" id="id_password" required>
                     </div>
@@ -41,8 +46,8 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="id_birth_date" class="form-label">Fecha de nacimiento</label>
-                        <input type="text" name="birth_date" class="form-control" id="id_birth_date"
+                        <label for="id_birthDate" class="form-label">Fecha de nacimiento</label>
+                        <input type="text" name="birthDate" class="form-control" id="id_birthDate"
                             placeholder="DD/MM/AAAA" required>
                     </div>
 
@@ -59,7 +64,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        flatpickr("#id_birth_date", {
+        flatpickr("#id_birthDate", {
             dateFormat: "d/m/Y",
             locale: "es",
             maxDate: "today" // No permite fechas futuras

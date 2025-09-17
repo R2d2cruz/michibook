@@ -30,6 +30,12 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="id_email" class="form-label">Correo electronico</label>
+                        <input type="text" name="email" maxlength="254" id="id_email" class="form-control"
+                            value="{{ user.email }}" required>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="id_birthDate" class="form-label">Fecha de nacimiento</label>
                         {% if profile.birthDate %}
                         <input type="text" name="birthDate" id="id_birthDate" class="form-control"
@@ -45,8 +51,6 @@
                         <textarea name="biography" id="id_biography" rows="5" class="form-control"
                             placeholder="Escribe tu biografía...">{{ profile.biography }}</textarea>
                     </div>
-
-                    <input type="hidden" name="email" value="{{ user.email }}">
 
                     <div class="d-grid mt-4">
                         <button type="submit" class="btn btn-primary btn-lg">Guardar cambios</button>
