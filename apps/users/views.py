@@ -10,7 +10,7 @@ from datetime import datetime
 def userProfile(request, username):
     try:
         user = get_object_or_404(User, username=username)
-    except User.DoesNotExist:
+    except:
         return render(request, 'userProfile.html', {
             'error': "Usuario " + username + " no encontrado"
         })
@@ -40,8 +40,7 @@ def userEditProfile(request, username):
     try:
         user = get_object_or_404(User, username=username)
         userProfile = get_object_or_404(UserProfile, user=user)
-        print(userProfile.birthDate)
-    except User.DoesNotExist:
+    except:
         return render(request, 'userProfile.html', {
             'error': "Usuario " + username + " no encontrado"
         })
