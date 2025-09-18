@@ -58,6 +58,7 @@ def userEditProfile(request, username):
                 birthDate = None
             userProfile.biography = request.POST['biography']
             userProfile.birthDate = birthDate
+            userProfile.avatarChoice = request.POST["avatarChoice"]
             userProfile.save()
             return redirect('userProfile', username)
     return render(request, 'userEditProfile.html', {
