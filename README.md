@@ -112,6 +112,3 @@ Luego abre http://localhost:8000 en tu navegador.
 
 - **Etiquetas y Filtros**:  
   Añadir la opción de crear y asignar tags a las publicaciones, permitiendo filtrar el contenido por temas de interés.
-
-- **Gatos de Perfil**:  
-  Incorporar la posibilidad de elegir un gato como avatar desde una selección de imágenes predefinidas en la aplicación.
