@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
 <div class="container mt-4">
     <div class="row justify-content-center">
@@ -9,13 +11,22 @@
             {% endif %}
 
             <div class="card p-4 text-center">
-                <div class="d-flex justify-content-center mb-3">
-                    <div class="profile-pic-container-lg"></div>
-                </div>
-                <h2 class="mb-4 user-profile-username">@{{ user.username }}</h2>
 
                 <form method="post">
                     {% csrf_token %}
+                    <div class="d-flex justify-content-center mb-3">
+                        <div class="profile-selector">
+                            <div class="profile-pic-container-lg" id="profile-main"></div>
+
+                            <div class="profile-option" data-cat="blackCat"></div>
+                            <div class="profile-option" data-cat="orangeCat"></div>
+                            <div class="profile-option" data-cat="whiteCat"></div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="avatarChoice" id="avatarChoice" value="blackCat">
+
+                    <h2 class="mb-4 user-profile-username">@{{ user.username }}</h2>
 
                     <div class="mb-3">
                         <label for="id_first_name" class="form-label">Nombre</label>
@@ -70,4 +81,31 @@
         });
     });
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const selector = document.querySelector(".profile-selector");
+        const main = document.getElementById("profile-main");
+        const options = document.querySelectorAll(".profile-option");
+        const selectedCatInput = document.getElementById("avatarChoice");
+
+        main.style.backgroundImage = "url('{% static 'img/'|add:user.profile.avatarChoice|add:'/profileCat.webp' %}')";
+
+        main.addEventListener("click", () => {
+            selector.classList.toggle("active");
+        });
+
+        // Cambiar avatar al hacer click en opción
+        options.forEach(option => {
+            option.style.backgroundImage = `url("{% static 'img/' %}${option.dataset.cat}/profileCat.webp")`;
+            option.addEventListener("click", () => {
+                main.style.backgroundImage = option.style.backgroundImage;
+                selectedCatInput.value = option.dataset.cat;
+                selector.classList.remove("active");
+                // Aquí puedes guardar la selección con fetch/POST si quieres
+                console.log("Seleccionado:", option.dataset.cat);
+            });
+        });
+    });
+</script>
+
 {% endblock %}
